@@ -4,32 +4,40 @@ import os
 import time
 import playsound
 import speech_recognition as sr
+import pyttsx3
 from gtts import gTTS
+
+########## Init ##########
+
+engine = pyttsx3.init('sapi5')
+
+voices = engine.getProperty('voices')
 
 ########## Fx ##########
 
-def say(text):
-	tts = gTTS(text=text, lang='en')
-	filename = 'voice.mp3'
-	tts.save(filename)
-	playsound.playsound(filename)
 
-def get():
+def speak(audio):
+	engine.say(audio)
+	engine.runAndWait()
+
+def command():
 	r = sr.Recognizer()
 	with sr.Microphone() as source:
+		print("listening ...")
+		r.pause_threshold = 1
 		audio = r.listen(source)
-		said = ""
-
-		try:
-			said = r.recognize_google
-		except Exception as e:
-			print(" exception is : " + str(e))
-	return said
 
 
+	try:
+		query = r.recognize_google(audio,language='en-in')
+		print("user :",query,"\n")
+	except sr.UnkownValueError:
+		speak("sorry didn't get that, try typing")
+		query = str(input(" : "))
+		print("\n")
+	return query
 
-# just testin the function and any runtime errors on my machine
-say("hello there")
+########## Main ##########
+got = command()
 
-# fully functional
-get()
+print(got)
