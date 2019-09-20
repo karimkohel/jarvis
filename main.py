@@ -1,19 +1,13 @@
 ########## Imports ##########
-
-import os
-import time
-import playsound
 import speech_recognition as sr
 import pyttsx3
-from gtts import gTTS
+import sayings
 
 ########## Init ##########
 
 engine = pyttsx3.init('sapi5')
 
 voices = engine.getProperty('voices')
-
-assistant_name = "Jarvis"
 
 ########## Fx ##########
 
@@ -38,16 +32,6 @@ def command():
 		print("\n")
 	return query
 
-def greet():
-	time = int(datetime.datetime.now().hour)
-	if (time >= 0) and (time <= 12):
-		speak("Good Morning, i am your assistant",assistant_name)
-		speak("how can i be of service")
-	elif (time >12):
-		speak("Good Afternoon, i am your assistant",assistant_name)
-		speak("how can i be of service")
-	else:
-		speak("Hello, i am your assistant",assistant_name)
-		speak("how can i be of service")
-
 ########## Main ##########
+if __name__ == '__main__':
+	speak(sayings.greeting())
