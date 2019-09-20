@@ -13,6 +13,8 @@ engine = pyttsx3.init('sapi5')
 
 voices = engine.getProperty('voices')
 
+assistant_name = "Jarvis"
+
 ########## Fx ##########
 
 
@@ -27,7 +29,6 @@ def command():
 		r.pause_threshold = 1
 		audio = r.listen(source)
 
-
 	try:
 		query = r.recognize_google(audio,language='en-in')
 		print("user :",query,"\n")
@@ -37,7 +38,16 @@ def command():
 		print("\n")
 	return query
 
-########## Main ##########
-got = command()
+def greet():
+	time = int(datetime.datetime.now().hour)
+	if (time >= 0) and (time <= 12):
+		speak("Good Morning, i am your assistant",assistant_name)
+		speak("how can i be of service")
+	elif (time >12):
+		speak("Good Afternoon, i am your assistant",assistant_name)
+		speak("how can i be of service")
+	else:
+		speak("Hello, i am your assistant",assistant_name)
+		speak("how can i be of service")
 
-print(got)
+########## Main ##########
